@@ -11,13 +11,19 @@ String password = "12345678";
 void setup()
 {
   wirelessConnection->createConnection(SSID, password);
-  wirelessConnection->connectDevice();
+  
 
   Serial.begin(9600);
 }
 
 void loop()
 {
+  if (wirelessConnection->connectDevice())
+  {
+    Serial.println ("WIFI_AP mode");
+    Serial.print("IPv4: ");
+    Serial.println(wirelessConnection->getIPv4());
+  }
   Serial.println("--------------- Connecting ESP8266");
   Serial.print("Connection ");
 

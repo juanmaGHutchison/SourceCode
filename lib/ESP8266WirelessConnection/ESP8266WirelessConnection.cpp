@@ -5,6 +5,10 @@
 
 void ESP8266WirelessConnection::createConnection(String SSID, String password)
 {
+    // Allocate Wifi settings
+    _SSID = SSID;
+    _password = password;
+    // Set ESP8266 as access point
     WiFi.mode(WIFI_AP);
 }
 
@@ -12,7 +16,7 @@ bool ESP8266WirelessConnection::connectDevice()
 {
     WiFi.softAP(_SSID, _password);
 
-    return (isConnected());
+    return (WiFi.getMode() == WIFI_AP);
 }
 
 String ESP8266WirelessConnection::getIPv4()

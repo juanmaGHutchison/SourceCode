@@ -13,8 +13,8 @@ public:
     int connectedDevices();
 
 private:
-    String _SSID,
-        _password;
+    String  _SSID,
+            _password;
 };
 
 #endif
