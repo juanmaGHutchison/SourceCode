@@ -12,6 +12,7 @@ public:
     String printMode();
     bool isConnected();
     int connectedDevices();
+    bool disconnect();
 
 private:
     String _SSID,

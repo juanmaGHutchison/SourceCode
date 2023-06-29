@@ -11,7 +11,9 @@ public:
     String getIPv4();
     String printMode();
     bool isConnected();
-    int connectedDevices();
+    bool antNetworkIsAvailable();
+
+    bool disconnect();
 
 private:
     String _SSID,

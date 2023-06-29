@@ -10,8 +10,9 @@ public:
     virtual bool connectDevice() = 0;
     virtual String getIPv4() = 0;
     virtual bool isConnected() = 0;
-    virtual int connectedDevices() = 0;
     virtual String printMode() = 0;
+    virtual bool disconnect() = 0;
+    virtual ~IWirelessConnection() {}
 };
 
 #endif

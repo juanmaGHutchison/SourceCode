@@ -14,6 +14,7 @@ public:
     bool connectToNetwork();
     bool isConnected();
     String getWifiMode();
+    virtual ~WifiManager();
 
 private:
     IWirelessConnection *_wirelessConnection;

@@ -4,12 +4,16 @@ WifiManager::WifiManager(String SSID, String password)
 {
     _wifiAPMode.configureConnection(SSID, password);
     _wifiSlaveMode.configureConnection(SSID, password);
-
-    connectToNetwork();
 }
 
 bool WifiManager::connectToNetwork()
 {
+    // Disconnect all WIFI modes
+    // This is needed because otherwise it will create an AP and connect to itself
+    if (_wifiAPMode.isConnected())
+        _wifiAPMode.disconnect();
+
+    // Connect in proper mode
     if (_wifiSlaveMode.connectDevice())
         _wirelessConnection = &_wifiSlaveMode;
     else if (_wifiAPMode.connectDevice())
@@ -25,5 +29,11 @@ bool WifiManager::isConnected()
 
 String WifiManager::getWifiMode()
 {
-    _wirelessConnection->printMode();
+    return _wirelessConnection->printMode();
+}
+
+WifiManager::~WifiManager()
+{
+    _wirelessConnection->disconnect();
+    delete _wirelessConnection;
 }

@@ -10,11 +10,13 @@ void ESP8266SlaveWirelessConnection::configureConnection(String SSID, String pas
 
 bool ESP8266SlaveWirelessConnection::connectDevice()
 {
-    int delayOneSecond = 1000;
+    int delaySeconds = 1,
+        maxAttempts = 7;
 
     WiFi.begin(_SSID, _password);
 
-    delay(delayOneSecond);
+    for (int attempts = 0; attempts < maxAttempts && !isConnected(); ++attempts)
+        delay(delaySeconds * 1000);
 
     return isConnected();
 }
@@ -34,7 +36,26 @@ bool ESP8266SlaveWirelessConnection::isConnected()
     return (WiFi.status() == WL_CONNECTED);
 }
 
-int ESP8266SlaveWirelessConnection::connectedDevices()
+bool ESP8266SlaveWirelessConnection::antNetworkIsAvailable()
 {
-    return WiFi.scanNetworks();
+    Serial.println("ESP8266SlaveWirelessConnection::antNetworkIsAvailable()");
+    bool antNetworkExists = (isConnected());
+    int networks = WiFi.scanNetworks();
+
+    for (int i = 0; i < networks && !antNetworkExists; ++i)
+    {
+        antNetworkExists = (WiFi.SSID(i) == _SSID && WiFi.RSSI(i) >= (int32_t)-70);
+        Serial.println((int32_t)WiFi.RSSI(i) + " dbm");
+    }
+
+    Serial.println((antNetworkExists) ? "ANE: OK" : "ANE: NO");
+    Serial.println((isConnected()) ? "IC: OK" : "IC: NO");
+    Serial.println((WiFi.status() == WL_CONNECTED) ? "POSI" : "PONO");
+
+    return antNetworkExists;
+}
+
+bool ESP8266SlaveWirelessConnection::disconnect()
+{
+    return WiFi.disconnect();
 }

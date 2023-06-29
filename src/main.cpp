@@ -10,6 +10,7 @@ WifiManager wifiConnection(SSID, password);
 void setup()
 {
   Serial.begin(9600);
+  wifiConnection.connectToNetwork();
 }
 
 void loop()
@@ -18,6 +19,8 @@ void loop()
   {
     wifiConnection.connectToNetwork();
   }
-
-  Serial.println("------ Device mode: " + wifiConnection.getWifiMode());
+  else
+  {
+    Serial.println("------ Device mode: " + wifiConnection.getWifiMode());
+  }
 }

@@ -18,7 +18,7 @@ bool ESP8266APWirelessConnection::connectDevice()
 
 String ESP8266APWirelessConnection::printMode()
 {
-    return (isConnected) ? "Access-Point mode" : "Disconnected";
+    return (isConnected()) ? "Access-Point mode" : "Disconnected";
 }
 
 String ESP8266APWirelessConnection::getIPv4()
@@ -34,4 +34,9 @@ bool ESP8266APWirelessConnection::isConnected()
 int ESP8266APWirelessConnection::connectedDevices()
 {
     return WiFi.softAPgetStationNum();
+}
+
+bool ESP8266APWirelessConnection::disconnect()
+{
+    return WiFi.disconnect();
 }
